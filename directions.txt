@@ -1,0 +1,12 @@
+1. Make sure to be on the OSU vpn
+2. SSH to flip1
+3. $ mkdir microservice_test
+4. $ cd microservice_test
+5. Place server.py and requirements.txt in microservice_test folder
+6. $ python3 -m venv venv
+7. $ source venv/bin/activate
+8. $ pip3 install -r requirements.txt
+9. $ python3 server.py
+10. open web browser and go to http://flip1.engr.oregonstate.edu:63861/
+11. Click random button on UI
+12. You should see command line updating every time you click
