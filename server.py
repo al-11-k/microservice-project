@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template, request
 import random
 
 app = Flask(__name__)
@@ -24,25 +24,37 @@ def function_gen():
     return "".join(function_list)
 
 
+@app.route('/', methods=['GET', 'POST'])
 
-@app.route('/', methods=['GET'])
-def home():
-    print("")
-    print("********************************************")
-    print("Listening... for randomize click")
-    print("")
-    print("Received message and generating 2 random functions for you!")
-    print("Calculating...")
-    print("")
-    input_1 = function_gen()
-    input_2 = function_gen()
-    print("Sending...")
-    print("Sending input 1: " + str(input_1))
-    print("Sending input 2: " + str(input_2))
+def rendering():
+    # this was for the test request :)
+    if request.method == 'POST':
+        input_1 = function_gen()
+        input_2 = function_gen()
+        return render_template('/answer.html', function1=input_1, function2=input_2)
 
-    print("********************************************")
-    return jsonify({"input_1": input_1, "input_2": input_2})
+    if request.method == 'GET':
+        return render_template('/test_call.html')
+
+
+#def home():
+    #print("")
+    #print("********************************************")
+    #print("Listening... for randomize click")
+    #print("")
+    #print("Received message and generating 2 random functions for you!")
+    #print("Calculating...")
+    #print("")
+    #input_1 = function_gen()
+    #input_2 = function_gen()
+    #print("Sending...")
+    #print("Sending input 1: " + str(input_1))
+    #print("Sending input 2: " + str(input_2))
+
+    #print("********************************************")
+    #return render_template('test_call.html', )
+    #return jsonify({"input_1": input_1, "input_2": input_2})
 
 
 if __name__ == '__main__':
-    app.run(host='localhost', port=65398)
+    app.run(debug=True)
