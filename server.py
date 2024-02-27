@@ -26,6 +26,7 @@ def function_gen():
 
 @app.route('/', methods=['GET', 'POST'])
 
+
 def rendering():
     # this was for the test request :)
     if request.method == 'POST':
