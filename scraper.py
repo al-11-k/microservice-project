@@ -5,6 +5,7 @@ import time
 #add to url to accomodate for equiptment
 
 def scraper(level, style, time, muscles):
+    exercise_count = 0
     print("Searching for the perfect exercises!")
     if muscles == "random":
         if style == "random":
@@ -25,6 +26,10 @@ def scraper(level, style, time, muscles):
             for exercise in exercises:
                 name = exercise.find("h3", class_="ExHeading ExResult-resultsHeading")
                 f.write(name.text.strip() + '\n')
+                exercise_count += 1
             f.close()
+
+    print("getting ready to generate now!")
+    return exercise_count
 
 
