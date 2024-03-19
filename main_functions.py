@@ -4,6 +4,7 @@ import os
 from inputimeout import *
 from login import *
 from scraper import *
+from tutorial import *
 
 
 def intro():
@@ -11,7 +12,8 @@ def intro():
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
     print("\n                        Welcome to </strong>\n")
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-    print("\n</strong> is a CLI interface that generates workouts for its strong nerd users!")
+    print("\n</strong> is a CLI interface that generates workouts for its strong nerd users! It utilizes the database"
+          "provided by bodybuilding.com and the principle of randomness to maximize your gains.")
 
     start = input("\n Enter 1 to get started or enter 2 to see the tutorial: ")
     return start
@@ -37,14 +39,19 @@ def get_login():
         return
 
 
-def experience_level():
-    """User picks their experience level"""
+def print_experience_level():
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
     print("Perfect! Now we can get started with the customization.\n")
     print("How experienced ar you in the gym?")
     print("1. Beginner - I am new and excited!")
     print("2. Intermediate - I know my way around, but I am still unsure at times")
     print("3. Expert - I know that place like the back of my hand!")
+
+
+def experience_level():
+    """User picks their experience level"""
+    print_experience_level()
+
     while True:
         level = input("\n Enter a number option: ")
         if level == "1" or level == "2" or level == "3":
@@ -54,14 +61,14 @@ def experience_level():
                 return 1
             if level == 'back' or level == 'Back':
                 return -1
+            if level.upper() == 'help':
+                tutorial_greeting()
             else:
                 print("Oops! Looks like you have an invalid input. Please enter a number option 1-3 or "
                   "enter 'help' for a tutorial.")
 
 
-
-def workout_style():
-    """Users can set their workout style"""
+def print_workout_style():
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
     print("Awesome! Now it is time to pick the style of your workout!")
     print("1. Bodybuilding/strength")
@@ -71,6 +78,11 @@ def workout_style():
     print("5. Yoga/Stretching")
     print("6. Cardio")
     print("7. Totally random!")
+
+
+def workout_style():
+    """Users can set their workout style"""
+    print_workout_style()
     while True:
         style = input("\nEnter a number option: ")
         if style == "1" or style == "2" or style == "3" or style == "4" or style == "5" or style == "6" or style == "7":
@@ -80,13 +92,14 @@ def workout_style():
                 return 1
             if style == 'back' or style == 'Back':          # user wants to go back a step
                 return -1
+            if style.upper() == 'help':
+                tutorial_greeting()
             else:
                 print("Oops! Looks like you have an invalid input. Please enter a number option 1-7 or "
                   "enter 'help' for a tutorial.")
 
 
-def time_set():
-    """Users can set the time for their workout"""
+def print_time_set():
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
     print("Ok! How much time do you have for your workout?")
     print("1. 30 - 45 minutes")
@@ -94,6 +107,11 @@ def time_set():
     print("3. 1 hour - 1.5 hours")
     print("4. 1.5 hours - 2 hours")
     print("5. 2+ hours")
+
+
+def time_set():
+    """Users can set the time for their workout"""
+    print_time_set()
     while True:
         wk_time = input("\nEnter a number option: ")
         if wk_time == "1" or wk_time == "2" or wk_time == "3" or wk_time == "4" or wk_time == "5":
@@ -103,13 +121,14 @@ def time_set():
                 return 1
             if wk_time == 'back' or wk_time == 'Back':          # user wants to go back a step
                 return -1
+            if wk_time.upper() == 'help':
+                tutorial_greeting()
             else:
                 print("Oops! Looks like you have an invalid input. Please enter a number option 1-5 or "
                   "enter 'help' for a tutorial.")
 
 
-def set_muscles():
-    """Users can pick the muscle groups to target"""
+def print_set_muscles():
     print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
     print("Last step! Which muscle groups would you like to target?")
     print("1. Upper Body")
@@ -117,32 +136,168 @@ def set_muscles():
     print("3. Full Body")
     print("4. Completely random!")
 
+
+def set_muscles():
+    """Users can pick the muscle groups to target"""
+    print_set_muscles()
     while True:
         muscles = input("\nEnter a number option: ")
         if muscles == "1" or muscles == "2" or muscles == "3" or muscles == "4" or muscles == "5":
-                return muscles
+            return muscles
         else:
             if muscles == 'exit' or muscles == 'Exit':          # user wants to exit process
                 return 1
             if muscles == 'back' or muscles == 'Back':          # user wants to go back a step
                 return -1
+            if muscles.upper() == 'help':
+                tutorial_greeting()
             else:
                 print("Oops! Looks like you have an invalid input. Please enter a number option 1-5 or "
                   "enter 'help' for a tutorial.")
 
 
-def confirmation(user_parameters, muscle_num, muscles_directory, level_directory, workout_directory, time_directory):
+def print_confirmation(user_parameters, muscle_num):
     muscle_group_dir = {"1": "Upper Body", "2": "Lower Body", "3": "Full Body", "4": "Random"}
+    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+    print("Great! Now let's confirm that you entered the correct information.")
+    print("1. Level             =   "f"{user_parameters["level"]}")
+    print("2. Style             =   "f"{user_parameters["style"]}")
+    print("3. Workout Length    =   "f"{user_parameters["time"]}")
+    if muscle_num == "0":
+        print("4. Muscle Groups     =   "f"{" , ".join(user_parameters["muscles"])}")
+    else:
+        print("4. Muscle Groups     =   "f"{muscle_group_dir[muscle_num]}")
+
+
+def print_change_group_1(user_parameters):
+    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+    print("You selected to change your experience level.")
+    print("It is currently at "f"{user_parameters["level"]}")
+    print("Here are your options to change:\n")
+    print("1. Beginner - I am new and excited!")
+    print("2. Intermediate - I know my way around, but I am still unsure at times")
+    print("3. Expert - I know that place like the back of my hand!")
+
+
+def change_group_1(user_parameters, level_directory):
+    print_change_group_1(user_parameters)
+
     while True:
-        print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-        print("Great! Now let's confirm that you entered the correct information.")
-        print("1. Level             =   "f"{user_parameters["level"]}")
-        print("2. Style             =   "f"{user_parameters["style"]}")
-        print("3. Workout Length    =   "f"{user_parameters["time"]}")
-        if muscle_num == "0":
-            print("4. Muscle Groups     =   "f"{" , ".join(user_parameters["muscles"])}")
+        new_level = input("Please enter the number index of the level you would like to change to: ")
+        if level_directory[new_level] == user_parameters["level"]:
+            print("That was the same level you already had!")
+            same_as_before = input(
+                "If you would like to exit, enter 'done' if you would like to try again just press the enter key on your computer: ")
+            if same_as_before == 'done' or same_as_before == 'Done':
+                break
+        if new_level == "1" or new_level == "2" or new_level == "3":
+            user_parameters["level"] = level_directory[new_level]
+            print("Changing your level now...")
+            break
         else:
-            print("4. Muscle Groups     =   "f"{muscle_group_dir[muscle_num]}")
+            print("Invalid input! Please enter a number index (1-3).")
+
+
+def print_change_group_2(user_parameters):
+    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+    print("You selected to change your workout style.")
+    print("You currently selected the "f"{user_parameters["style"]}.")
+    print("Here are you options to change: \n")
+    print("1. Bodybuilding")
+    print("2. Powerlifting")
+    print("3. Olympic Lifting")
+    print("4. Strongman")
+    print("5. Yoga/Stretching")
+    print("6. Cardio")
+    print("7. Totally random!")
+
+
+def change_group_2(user_parameters, workout_directory):
+    print_change_group_2(user_parameters)
+
+    while True:
+        new_style = input("Please enter the number index of the level you would like to change to: ")
+        if workout_directory[new_style] == user_parameters["style"]:
+            print("That was the same level you already had!")
+            same_as_before = input(
+                "If you would like to exit, enter 'done' if you would like to try again just press the enter key on your computer: ")
+            if same_as_before == 'done' or same_as_before == 'Done':
+                break
+        if new_style == "1" or new_style == "2" or new_style == "3" or new_style == "4" or new_style == "5" or new_style == "6" or new_style == "7":
+            user_parameters["style"] = workout_directory[new_style]
+            print("Changing your level now...")
+            break
+        else:
+            print("Invalid input! Please enter a number index (1-7).")
+
+
+def print_change_group_3(user_parameters):
+    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+    print("You selected to change your workout length.")
+    print("You currently selected the "f"{user_parameters["time"]}.")
+    print("Here are your options to change: \n")
+    print("1. 30 - 45 minutes")
+    print("2. 45 minutes - 1 hours")
+    print("3. 1 hour - 1.5 hours")
+    print("4. 1.5 hours - 2 hours")
+    print("5. 2+ hours")
+
+
+def change_group_3(user_parameters, time_directory):
+    print_change_group_3(user_parameters)
+
+    while True:
+        new_wk_time = input("Please enter the number index of the level you would like to change to: ")
+        if time_directory[new_wk_time] == user_parameters["time"]:
+            print("That was the same level you already had!")
+            same_as_before = input(
+                "If you would like to exit, enter 'done' if you would like to try again just press the enter key on your computer: ")
+            if same_as_before == 'done' or same_as_before == 'Done':
+                break
+        if new_wk_time == "1" or new_wk_time == "2" or new_wk_time == "3" or new_wk_time == "4" or new_wk_time == "5":
+            user_parameters["time"] = time_directory[new_wk_time]
+            print("Changing your level now...")
+            break
+        else:
+            print("Invalid input! Please enter a number index (1-8).")
+
+
+def print_change_group_4(muscle_num):
+    muscle_group_dir = {"1": "Upper Body", "2": "Lower Body", "3": "Full Body", "4": "Random"}
+    print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+    print("You selected to change your muscle groups.")
+    print("You currently selected "f"{muscle_group_dir[muscle_num]}")
+    print("Here are your options to change: \n")
+    print("1. Upper Body")
+    print("2. Lower Body")
+    print("3. Full Body")
+    print("4. Completely random!")
+
+
+def change_group_4(user_parameters, muscle_num, muscles_directory):
+    print_change_group_4(muscle_num)
+
+    while True:
+        new_muscles = input("Please enter the number index of the level you would like to change to: ")
+        if new_muscles == muscle_num:
+            print("That was the same level you already had!")
+            same_as_before = input(
+                "If you would like to exit, enter 'done' if you would like to try again just press the enter key on your computer: ")
+            if same_as_before == 'done' or same_as_before == 'Done':
+                break
+        if new_muscles == "1" or new_muscles == "2" or new_muscles == "3" or new_muscles == "4":
+            user_parameters["muscles"] = muscles_directory[new_muscles]
+            muscle_num = new_muscles
+            print("Changing your level now...")
+            break
+        else:
+            print("Invalid input! Please enter a number index (1-4).")
+
+
+def confirmation(user_parameters, muscle_num, muscles_directory, level_directory, workout_directory, time_directory):
+    while True:
+        print_confirmation(user_parameters, muscle_num)
+
         correct = input("Is this correct? (Y/N): ")
         if correct == "Y" or correct == "y":
             break
@@ -150,98 +305,13 @@ def confirmation(user_parameters, muscle_num, muscles_directory, level_directory
             change_group = input("Please enter the number of the parameter you would like to change (1-4): ")
 
             if change_group == "1":
-                print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-                print("You selected to change your experience level.")
-                print("It is currently at "f"{user_parameters["level"]}")
-                print("Here are your options to change:\n")
-                print("1. Beginner - I am new and excited!")
-                print("2. Intermediate - I know my way around, but I am still unsure at times")
-                print("3. Expert - I know that place like the back of my hand!")
-                while True:
-                    new_level = input("Please enter the number index of the level you would like to change to: ")
-                    if level_directory[new_level] == user_parameters["level"]:
-                        print("That was the same level you already had!")
-                        same_as_before = input("If you would like to exit, enter 'done' if you would like to try again just press the enter key on your computer: ")
-                        if same_as_before == 'done' or same_as_before == 'Done':
-                            break
-                    if new_level == "1" or new_level == "2" or new_level == "3":
-                        user_parameters["level"] = level_directory[new_level]
-                        print("Changing your level now...")
-                        break
-                    else:
-                        print("Invalid input! Please enter a number index (1-3).")
+                change_group_1(user_parameters, level_directory)
 
             if change_group == "2":
-                print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-                print("You selected to change your workout style.")
-                print("You currently selected the "f"{user_parameters["style"]}.")
-                print("Here are you options to change: \n")
-                print("1. Bodybuilding")
-                print("2. Powerlifting")
-                print("3. Olympic Lifting")
-                print("4. Strongman")
-                print("5. Yoga/Stretching")
-                print("6. Cardio")
-                print("7. Totally random!")
-                while True:
-                    new_style = input("Please enter the number index of the level you would like to change to: ")
-                    if workout_directory[new_style] == user_parameters["style"]:
-                        print("That was the same level you already had!")
-                        same_as_before = input("If you would like to exit, enter 'done' if you would like to try again just press the enter key on your computer: ")
-                        if same_as_before == 'done' or same_as_before == 'Done':
-                            break
-                    if new_style == "1" or new_style == "2" or new_style == "3" or new_style == "4" or new_style == "5" or new_style == "6" or new_style == "7":
-                        user_parameters["style"] = workout_directory[new_style]
-                        print("Changing your level now...")
-                        break
-                    else:
-                        print("Invalid input! Please enter a number index (1-7).")
+                change_group_2(user_parameters, workout_directory)
 
             if change_group == "3":
-                print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-                print("You selected to change your workout length.")
-                print("You currently selected the "f"{user_parameters["time"]}.")
-                print("Here are your options to change: \n")
-                print("1. 30 - 45 minutes")
-                print("2. 45 minutes - 1 hours")
-                print("3. 1 hour - 1.5 hours")
-                print("4. 1.5 hours - 2 hours")
-                print("5. 2+ hours")
-                while True:
-                    new_wk_time = input("Please enter the number index of the level you would like to change to: ")
-                    if time_directory[new_wk_time] == user_parameters["time"]:
-                        print("That was the same level you already had!")
-                        same_as_before = input("If you would like to exit, enter 'done' if you would like to try again just press the enter key on your computer: ")
-                        if same_as_before == 'done' or same_as_before == 'Done':
-                            break
-                    if new_wk_time == "1" or new_wk_time == "2" or new_wk_time == "3" or new_wk_time == "4" or new_wk_time == "5":
-                        user_parameters["time"] = time_directory[new_wk_time]
-                        print("Changing your level now...")
-                        break
-                    else:
-                        print("Invalid input! Please enter a number index (1-8).")
+                change_group_3(user_parameters, time_directory)
 
             if change_group == "4":
-                print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-                print("You selected to change your muscle groups.")
-                print("You currently selected "f"{muscle_group_dir[muscle_num]}")
-                print("Here are your options to change: \n")
-                print("1. Upper Body")
-                print("2. Lower Body")
-                print("3. Full Body")
-                print("4. Completely random!")
-                while True:
-                    new_muscles = input("Please enter the number index of the level you would like to change to: ")
-                    if new_muscles == muscle_num:
-                        print("That was the same level you already had!")
-                        same_as_before = input(
-                            "If you would like to exit, enter 'done' if you would like to try again just press the enter key on your computer: ")
-                        if same_as_before == 'done' or same_as_before == 'Done':
-                            break
-                    if new_muscles == "1" or new_muscles == "2" or new_muscles == "3" or new_muscles == "4":
-                        user_parameters["muscles"] = muscles_directory[new_muscles]
-                        muscle_num = new_muscles
-                        print("Changing your level now...")
-                        break
-                    else:
-                        print("Invalid input! Please enter a number index (1-4).")
+                change_group_4(user_parameters, muscle_num, muscles_directory)

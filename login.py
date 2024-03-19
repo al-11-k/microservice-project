@@ -2,9 +2,11 @@
 import hashlib
 import re
 import time
+from tutorial import *
 
 
 def signup():
+    """Allows users to sign up """
     print("Welcome! We are so glad that you are signing up!")
     while True:
         username = input("Enter your username or email address: ")
@@ -13,10 +15,18 @@ def signup():
         match = re.search(username, opened_check)
 
         if match is not None:
-            print("Your email or username is already registered with an account! Please select the login option.")
-            check.close()
-            time.sleep(3)
-            return(1)
+            print("Your email or username is already registered with an account! Would you like to create a new account or login?")
+            print("1. Create a new account with this email")
+            print("2. Login to my account")
+            option = input("Enter a number option: ")
+
+            if option == "1":
+                continue
+            if option == "2":
+                check.close()
+                time.sleep(3)
+                return(1)
+
         pwd = input("Enter your password: ")
         conf_pwd = input("Confirm your password: ")
 
@@ -38,6 +48,7 @@ def signup():
 
 
 def login():
+    """Prompts users to log in"""
     while True:
         email = input("Enter email: ")
         pwd = input("Enter your password: ")
@@ -64,6 +75,7 @@ def login():
 
 
 def login_process():
+    """Displays the login home page"""
     while True:
         print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
         print("\n                             Welcome! Let's login or create a new account!\n")
@@ -82,10 +94,12 @@ def login_process():
             ret = login()
             if ret != 1:
                 return 0
+
         if option == 3:
             return 1
+
         if option == 4:
-            pass
+            tutorial_greeting()
 
 
 

@@ -13,6 +13,7 @@ def start_server():
         #  Wait for next request from client
         message = socket.recv()
         print("Microservice has been called upon!")
+        print(f"{message}")
 
         # Generate Random number
         random_num = str(random.randint(1, int(message)))

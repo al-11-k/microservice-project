@@ -1,6 +1,7 @@
 from gen_and_out import *
 from main_functions import *
 from scraper import *
+from tutorial import *
 
 
 def main():
@@ -82,9 +83,15 @@ def main():
 
                                                     confirmation(user_parameters, muscle_num, muscles_directory, level_directory, workout_directory, time_directory)   # the confirmation function ONLY exits once the user has confirmed everything
 
-                                                    exercises_count = scraper(user_parameters["level"], user_parameters["style"], user_parameters["time"], user_parameters["muscles"])
-                                                    output(exercises_count, user_parameters["time"])
+                                                    scraper(user_parameters["style"], user_parameters["muscles"], muscle_num)
+
+                                                    output_f = Output(user_parameters["time"])
+                                                    output_f.output()
                                                     quit()
+
+
+        if get_started == "2":
+            tutorial_greeting()
 
 
 if __name__ == "__main__":
